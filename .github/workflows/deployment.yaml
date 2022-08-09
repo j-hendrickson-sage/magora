@@ -18,13 +18,13 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libz-dev
+          sudo apt-get install libz-dev libxml-2.0
 
       - uses: actions/checkout@v2
 
       - name: Install R packages
         run: |
-          install.packages(c("httpuv", "shiny", "rsconnect", "tidyverse", "renv"))
+          install.packages(c("shiny", "rsconnect", "tidyverse", "renv"))
           renv::restore()
         shell: Rscript {0}
 
