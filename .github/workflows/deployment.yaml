@@ -1,0 +1,39 @@
+name: shiny-deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  shiny-deploy:
+    runs-on: ubuntu-latest
+    container: rocker/rstudio:4.1.0
+    env:
+       # This should not be necessary for installing from public repo's however install_github() fails without it.
+      GITHUB_PAT: ${{ secrets.REPO_PAT }}
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Install R packages
+        run: |
+          install.packages(c("shiny", "rsconnect", "tidyverse", "renv"))
+          renv::restore()
+        shell: Rscript {0}
+
+      - name: Authorize and deploy app
+        run: |
+          branch<-Sys.getenv("GITHUB_REF_NAME")
+          repo<-Sys.getenv("GITHUB_REPOSITORY")
+          appName<-strsplit(repo, "/")[[1]][2]
+          appName = paste(appName, "dev", sep="-")
+
+          rsConnectUser <-"${{ secrets.RSCONNECT_USER }}"
+          rsConnectToken <- "${{ secrets.RSCONNECT_TOKEN }}"
+          rsConnectSecret <- "${{ secrets.RSCONNECT_SECRET }}"
+
+          rsconnect::setAccountInfo(rsConnectUser, rsConnectToken, rsConnectSecret)
+          rsconnect::deployApp(appName = appName)
+        shell: Rscript {0}
