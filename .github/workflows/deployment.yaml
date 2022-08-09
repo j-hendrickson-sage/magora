@@ -18,7 +18,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libz-dev icu-devtools libicu-dev libxml2 libxml2-dev zlib1g-dev icu-devtools libdpkg-perl libexpat1-dev libfile-fcntllock-perl libfontconfig1-dev libfreetype-dev libfreetype6-dev libicu-dev liblocale-gettext-perl libpng-dev libpng-tools libxml2 libxml2-dev libfontconfig1-dev
+          sudo apt-get install libz-dev icu-devtools libicu-dev libxml2 libxml2-dev zlib1g-dev libfreetype6 pkg-config uuid-dev libfontconfig1-dev
 
       - uses: actions/checkout@v2
 
