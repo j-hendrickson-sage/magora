@@ -19,7 +19,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          install.packages(c("shiny", "rsconnect", "tidyverse", "renv"))
+          install.packages(c("shiny", "rsconnect", "tidyverse", "renv", "httpuv"))
           renv::restore()
         shell: Rscript {0}
 
