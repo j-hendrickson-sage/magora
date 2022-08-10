@@ -1,3 +1,8 @@
+## deploy dev magora
+
+### go here: https://github.com/j-hendrickson-sage/magora/actions
+
+### run action: deploy dev magora
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
