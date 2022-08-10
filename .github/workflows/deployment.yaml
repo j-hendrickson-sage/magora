@@ -41,4 +41,5 @@ jobs:
 
           rsconnect::setAccountInfo(rsConnectUser, rsConnectToken, rsConnectSecret)
           rsconnect::deployApp(appName = appName)
+          rsconnect::configureApp(appName, size="xxxlarge")
         shell: Rscript {0}
