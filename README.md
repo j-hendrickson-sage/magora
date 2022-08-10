@@ -3,6 +3,7 @@
 ### go here: https://github.com/j-hendrickson-sage/magora/actions
 
 ### run action: deploy prod magora
+#### shiny-deploy
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
