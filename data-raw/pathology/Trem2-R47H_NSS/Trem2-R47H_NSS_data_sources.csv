@@ -9,3 +9,10 @@ Insoluble Abeta42,pg/mg,syn29568619,1,UCI_Trem2R47H_NSS 4mo Abeta CTX_HIPP IF.cs
 Insoluble Abeta42,pg/mg,syn29568622,1,UCI_Trem2R47H_NSS 12mo Abeta CTX_HIPP IF.csv,Abeta42,NA
 NFL,pg/mg,syn29568489,2,UCI_Trem2R47H_NSS 4-12mo NfL CTX IF.csv,nf_l,NA
 NFL,pg/ml,syn29568490,1,UCI_Trem2R47H_NSS 4-12mo NfL Plasma.csv,nf_l,NA
+Plaque Density (Thio-S),#objects/ sqmm,syn49314479,1,UCI_TREM2-R47H_NSS_pathology.csv,objectDensity,ThioS
+Plaque Size (Thio-S),mean object volume (um^3),syn49314479,1,UCI_TREM2-R47H_NSS_pathology.csv,averageObjectVolume,ThioS
+Total Plaque Volume (OC),total object volume (um^3),syn49314479,1,UCI_TREM2-R47H_NSS_pathology.csv,totalObjectVolume,OC
+Microglia Cell Density (IBA1),#objects/ sqmm,syn49314479,1,UCI_TREM2-R47H_NSS_pathology.csv,objectDensity,IBA1
+Astrocyte Cell Density (GFAP),#objects/ sqmm,syn49314479,1,UCI_TREM2-R47H_NSS_pathology.csv,objectDensity,GFAP
+Astrocyte Cell Density (S100B),#objects/ sqmm,syn49314479,1,UCI_TREM2-R47H_NSS_pathology.csv,objectDensity,S100B
+Dystrophic Neurites (LAMP1),total object volume (um^3),syn49314479,1,UCI_TREM2-R47H_NSS_pathology.csv,totalObjectVolume,LAMP1

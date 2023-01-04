@@ -1,0 +1,13 @@
+name: magora-staging
+title: magora-staging
+username:
+account: sagebio
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7971444
+bundleId: 6694925
+url: https://sagebio.shinyapps.io/magora-staging/
+when: 1672789194.43986
+lastSyncTime: 1672789194.43986
+asMultiple: FALSE
+asStatic: FALSE

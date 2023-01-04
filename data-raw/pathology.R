@@ -438,10 +438,20 @@ read_clean_phenotype <- function(field, stain_filter, file) {
       dplyr::filter(stain == stain_filter)
   }
 
-  res %>%
-    dplyr::select(tidyselect::all_of(c("individual_id", "specimen_id", value = janitor::make_clean_names(field)))) %>%
+  res <- res %>%
+    # Some will not have individual_id because they have a Pool identifier instead - that's okay, just grab it if it is there
+    dplyr::select(tidyselect::any_of(c("individual_id")), tidyselect::all_of(c("specimen_id", value = janitor::make_clean_names(field)))) %>%
     dplyr::mutate_all(as.character) %>%
     janitor::remove_empty("rows")
+
+  # If it's not there, add a "fake" one just for keeping track of some ID
+
+  if (!"individual_id" %in% names(res)) {
+    res <- res %>%
+      mutate(individual_id = as.character(row_number()))
+  }
+
+  res
 }
 
 # Read in data
@@ -458,7 +468,7 @@ phenotype_data <- phenotype_files %>%
 ### Biospecimen metadata ----
 
 biospecimen_id <- "syn29568452"
-biospecimen_version <- 1
+biospecimen_version <- 3
 
 check_latest_version(biospecimen_id, biospecimen_version)
 
@@ -492,7 +502,7 @@ biospecimen_metadata %>%
 ### Individual metadata ----
 
 individual_id <- "syn27147690"
-individual_version <- 2
+individual_version <- 3
 
 check_latest_version(individual_id, individual_version)
 
@@ -507,12 +517,20 @@ individual_metadata <- read_csv(individual_metadata_path[["path"]]) %>%
 
 # Check which IDs are missing from metadata
 phenotype_data %>%
+  filter(!str_starts(specimen_id, "Pool")) %>%
   anti_join(biospecimen_metadata, by = c("individual_id", "specimen_id")) %>%
   distinct(individual_id, specimen_id)
 
 phenotype_data %>%
+  filter(!str_starts(specimen_id, "Pool")) %>%
   anti_join(individual_metadata, by = "individual_id") %>%
   distinct(individual_id)
+
+# filter 0's from select phenotype data
+
+phenotype_data <- phenotype_data %>%
+  filter(!(phenotype == "Total Plaque Volume (OC)" & value == 0)) %>%
+  filter(!(phenotype == "Dystrophic Neurites (LAMP1)" & value == 0))
 
 ## Clean data ----
 
@@ -551,6 +569,22 @@ individual_metadata <- individual_metadata %>%
     mouse_model = str_replace_all(mouse_model, "C57BL6J", "C57BL/6J"),
     mouse_model = as_factor(mouse_model)
   )
+
+### Form metadata for Pool identified specimens ----
+
+pool_biospecimen_metadata <- biospecimen_metadata %>%
+  filter(str_starts(specimen_id, "Pool"))
+
+pool_metadata <- pool_biospecimen_metadata %>%
+  left_join(individual_metadata, by = "individual_id") %>%
+  select(-individual_id) %>%
+  distinct() %>%
+  arrange(specimen_id)
+
+# Check that there is only one row for each pool
+
+pool_metadata %>%
+  get_dupes(specimen_id)
 
 ### Combine data ----
 
